@@ -920,6 +920,7 @@ vector <Graph *> PD_REV(int argc, char *argv[]){
 		public:
 			int val;
 	};
+    
 
 	vector <Graph *> my_graphs;
 	unsigned num_nets;
@@ -929,13 +930,48 @@ vector <Graph *> PD_REV(int argc, char *argv[]){
     string filename = "test.in";
     cout << "za file " << argument.input_file << endl;
 	inputFile.open(filename.c_str(), fstream::in);
+
+    // int tt = 0;
+    // string file_name2 = "test2.in";
+    // ofstream text_path2(file_name2.c_str());
+    // while(!inputFile.eof())
+    // {
+    //     string otherline;
+    //     if (tt == 0)
+    //     {
+            
+    //         getline(inputFile, otherline);
+    //         int location = otherline.find(" ");
+    //         otherline = otherline.erase(otherline.find(" "),1);
+    //         int location2 = otherline.find(" ");
+    //         otherline = otherline.erase(2,(location2-location));
+    //         cout << "from the file: " << otherline << endl;
+    //         text_path2 << otherline;
+    //         tt++;
+    //     }
+
+    //     text_path2 << otherline;
+
+    // }
+
+
+
 	string line, l;
 	vector<unsigned> x,y;
 	unsigned tmp_x = 0, tmp_y = 0;
     unsigned tmp_t = 0;
 	string tmp;
-
+    int linein = 0;
 	while (getline(inputFile, line)) {
+        if (linein == 0)
+        {
+            int location = line.find(" ");
+            line = line.erase(line.find(" "),1);
+            int location2 = line.find(" ");
+            line = line.erase(3,(location2-location));
+        }
+        cout << "from the file: " << line << endl;
+        linein++;
         cout << "other line: " << line << endl;
 		istringstream ss(line);
 		vector<string> values;
@@ -1092,22 +1128,28 @@ int main(int argc, char *argv[])
         int ic = 0;
         text_path << pdnets;
         int tt = 0;
-        while(!text_path.eof())
-        {
-            if (tt == 0)
-            {
-                string otherline;
-                getline(text_path, otherline);
-                int location = line.find(" ");
-                line = line.erase(line.find(" "),1);
-                int location2 = line.find(" ");
-                line = line.erase(2,(location2-location));
-                cout << "from the file: " << line << endl;
-            }
 
-            tt++;
+        // string file_name2 = "test2.in";
+		// ofstream text_path2(file_name2.c_str());
+        // while(!text_path.eof())
+        // {
+        //     string otherline;
+        //     if (tt == 0)
+        //     {
+                
+        //         getline(text_path, otherline);
+        //         int location = otherline.find(" ");
+        //         otherline = otherline.erase(otherline.find(" "),1);
+        //         int location2 = otherline.find(" ");
+        //         otherline = otherline.erase(2,(location2-location));
+        //         cout << "from the file: " << otherline << endl;
+        //         text_path2 << otherline;
+        //         tt++;
+        //     }
 
-        }
+        //     text_path2 << otherline;
+
+        // }
 
 		
         text_path.close();
@@ -1124,7 +1166,7 @@ int main(int argc, char *argv[])
             route_nodes.clear();
             
             int source_layer;
-            cout << "pd_graph[0]->root_idx: " << pd_graph << endl;
+            cout << "pd_graph[0]->root_idx: " << pd_graph[0] << endl;
             cout << "ba3d route_nodes" << endl;
             if(idMap.find(pd_graph[0]->root_idx) != idMap.end()){
                 source_layer = idMap[pd_graph[0]->root_idx].second;
